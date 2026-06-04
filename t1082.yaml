@@ -1,0 +1,34 @@
+title: Unusual process execution
+id: 12ec88c7-ab94-422f-a4b4-08ab7df2e330
+status: Experimental
+references:
+    - https://attack.mitre.org/techniques/T1082/
+    - https://github.com/redcanaryco/atomic-red-team
+Description: Event ID 1- Process Execution. Tested using atomic red team
+author: DGP2020
+date: 2026/06/04
+tags:
+   - attack.discovery
+   - attack.t1082
+logsource:
+    product:  Windows
+    service:  Sysmon
+detection:
+     selection_sysmon_eid:
+        EventID: 1
+     selection_parent:
+        ParentImage |endswith:
+         -'\powershell.exe'
+         -'\pwsh.exe'
+     selection_child:
+        ChildImage |endswith:
+          -'\reg.exe'
+          -'\systeminfo.exe'
+        CommandLine |contains:
+           -'query'
+           -'HKLM\Software\Microsoft\Windows NT\CurrentVersion'      
+     condition: selection_sysmon_eid and selection_parent and selection_child
+falsepositives:
+     - System audit scripts and asset management scripts could be flagged
+level: medium 
+    
