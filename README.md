@@ -32,7 +32,4 @@ To Elastic Query Language (EQL):
 Bash
 
 `sigma convert -t elasticsearch -p sysmon rules/windows/sysmon/t1082.yaml`
-
-
-
 e MIT License - see the LICENSE file for details.
