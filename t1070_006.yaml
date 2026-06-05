@@ -1,0 +1,46 @@
+title: Timestomping     #doesn't work with kusto
+id: b15cee50-62c8-4bbf-9b10-1003f4add3cf
+references:
+    - https://attack.mitre.org/techniques/T1070/006/
+    - https://github.com/redcanaryco/atomic-red-team
+status: Experimental
+author: DGP2020
+date: 2026/06/05
+tags:
+    - attack.t1070_006
+    - attack.indicator removal
+logsource: 
+    product: Windows
+    service: Sysmon
+    category: file_change
+detection:
+   selection:
+      TargetFilename|endswith:
+         - '.exe'
+         - '.dll'
+         - '.bat'
+         - '.ps1'
+         - '.js'
+         - '.cmd'
+         - '.vbs'
+   filter_recent_to_old:
+      PreviousCreationUtcTime|startswith: '2026' 
+      CreationUtcTime|startswith:
+          - '2021'
+          - '2022'
+          - '2023'
+          - '2024'
+          - '2025'
+   filter_legitimate:
+       Image|endswith:
+          - '\brave.exe'
+          - '\firefox.exe'
+          - '\GoogleUpdate.exe'
+          - '\WINWORD.exe'
+   condition: selection and filter_recent_to_old and not filter_legitimate
+falsepositives:
+    - System maintenance and backup tools 
+    - Development environments and build systems 
+    - Package managers and installers (e.g., dpkg, apt)
+    - Log rotation and management utilities
+level: medium
