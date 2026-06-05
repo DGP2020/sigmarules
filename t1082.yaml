@@ -13,9 +13,8 @@ tags:
 logsource:
     product:  Windows
     service:  Sysmon
+    category: process_creation
 detection:
-     selection_sysmon_eid:
-       EventId: 1
      selection_parent:
         ParentImage|endswith:
          -'\powershell.exe'
@@ -28,7 +27,7 @@ detection:
         CommandLine|contains:
            -'query'
            -'HKLM\Software\Microsoft\Windows NT\CurrentVersion'      
-     condition: selection_sysmon_eid and selection_parent and selection_child and selection_child_cmd
+     condition: selection_parent and selection_child and selection_child_cmd
 falsepositives:
      - System audit scripts and asset management scripts could be flagged
 level: medium 
