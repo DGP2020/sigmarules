@@ -4,5 +4,5 @@ A centralized, version-controlled repository for custom, high-signal [Sigma rule
 These rules are designed to bridge the gap between offensive emulation validation (via frameworks like Atomic Red Team) and defensive telemetry verification.
 
 
-Used (https://sigconverter.io) to test rules(target splunk with sysmon pipeline).
+Used https://sigconverter.io (target splunk with sysmon pipeline) and sigma-cli to test rules.
 
